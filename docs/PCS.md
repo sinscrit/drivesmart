@@ -2,9 +2,16 @@
 
 ## Product Concept & Strategy
 
-**Status:** Working concept
-**Version:** 0.1
+**Status:** Working concept — under revision following simulation
+**Version:** 0.2
 **Date:** August 2026
+
+> **Simulation findings, August 2026.** Phase 1 of the simulation specified in `SIM-PRD.md` has run; results are in `SIM-RESULTS.md`. Two conclusions bear directly on this document:
+>
+> 1. **The premise that downstream congestion absorbs upstream speed gains is not supported, and is frequently backwards.** Median pass-through across the tested route set was 1.00 — time saved by driving faster reaches the destination essentially intact. Capacity-limited queues and building-peak congestion *amplify* the benefit of arriving earlier rather than absorbing it. Only timed constraints (border posts, ferries, scheduled closures) and traffic-stream limits genuinely suppress gains.
+> 2. **The risk-adjusted argument holds and does not depend on route structure.** The time bought per unit of added crash risk degrades consistently with speed on every route tested, under every candidate exponent.
+>
+> Sections written on the first premise are marked below and need revision. The safety and risk argument in §6 is strengthened by these results, not weakened. The strategic consequence — that §6 rather than §5 should lead the product — is set out in `SIM-RESULTS.md` and is a decision still to be taken.
 
 ---
 
@@ -93,11 +100,18 @@ They contain downstream constraints:
 - difficult terrain;
 - incidents.
 
-Consequently, additional speed during one section can produce surprisingly little improvement in final arrival time.
+The original version of this section asserted that these constraints absorb upstream speed gains, so that additional speed produces surprisingly little improvement in final arrival time.
 
-A driver may therefore take additional risk, consume additional fuel or energy, brake more frequently and experience greater stress while obtaining almost no meaningful improvement in arrival time.
+**Simulation has shown that assertion to be wrong in the general case.** Most constraints are traversed at a reduced but fixed speed, which passes upstream savings through untouched. Capacity-limited queues and building-peak congestion actively amplify the value of arriving earlier. Across the tested route set, the median fraction of saved driving time reaching the destination was 1.00.
 
-Existing navigation products rarely communicate this relationship explicitly.
+Two constraints do genuinely suppress gains, and they are the exceptions worth detecting:
+
+- **Timed constraints** — a border post, ferry or scheduled closure that releases at a wall-clock time. Arriving early buys nothing at all.
+- **Traffic-stream limits** — where surrounding traffic, not the speed limit, sets the achievable mean speed (§18).
+
+The durable version of this section's argument is therefore not that speed fails to save time. It is that **the time it saves is bought at a steeply rising price in risk** (§6), and that the amount saved is often far smaller than a driver assumes because only part of any journey is speed-elastic.
+
+Existing navigation products communicate neither.
 
 ---
 
@@ -129,23 +143,22 @@ the system asks:
 
 > How much earlier will I actually arrive if I travel faster during this section?
 
-Consider a motorway section where the legal limit is 120 km/h.
+*The worked example previously given here — arrivals of 17:42, 17:39 and 17:38 for caps of 100, 110 and 120 km/h — was illustrative and is not reproducible. On a route where a 120 cap binds, the simulation gives a 110→120 benefit an order of magnitude larger than the one minute implied. It has been replaced with measured figures.*
 
-The system might calculate:
+Simulation across nine route archetypes (`SIM-RESULTS.md`) gives a median 110→120 benefit of **14.7 minutes** on journeys of three hours or more. The effect is real and, on motorway-dominated routes, substantial.
 
-| Cruising speed | Predicted arrival |
-| --- | --- |
-| 100 km/h | 17:42 |
-| 110 km/h | 17:39 |
-| 120 km/h | 17:38 |
+What varies enormously is the **speed-elastic fraction** — the share of a journey on which the driver's cruising speed is the binding constraint:
 
-The important information is therefore not simply that 120 km/h is faster than 100 km/h.
+| Route character | Speed-elastic fraction | 110→120 benefit |
+| --- | --- | --- |
+| Long motorway | 85% | 15.5 min |
+| Motorway with roadworks | 80% | 13.9 min |
+| Mixed motorway and secondary | 45% | 6.1 min |
+| Secondary-road dominated | 15% | 1.5 min |
 
-It is:
+This is the defensible version of the metric. A driver's intuition that speed saves time is correct; what they cannot see is how much of their particular journey is even available to be sped up. On a secondary-dominated route, a 10 km/h increase in intent buys 90 seconds across three hours.
 
-> Increasing from 110 to 120 km/h is currently expected to improve arrival by approximately one minute.
-
-This can become a distinctive product metric.
+Paired with the risk figures in §6, this becomes a genuine decision aid rather than a claim that speed does not work.
 
 Possible terminology includes:
 
@@ -440,9 +453,7 @@ For example:
 
 Useful-speed insight:
 
-> Travelling at 120 rather than 110 km/h during the main motorway sections is currently expected to improve arrival time by approximately four minutes, at roughly 40% higher fatal-crash risk over those sections.
-
-*Note: the four-minute figure is illustrative and unverified. Pending the simulation in `SIM-PRD.md`, no specific arrival-benefit number in this document should be treated as established.*
+> Travelling at 120 rather than 110 km/h during the main motorway sections would save approximately 15 minutes, at roughly 41% higher fatal-crash risk over those sections. This journey is 78% speed-elastic, which is unusually high.
 
 The objective is not to overwhelm the user with road data.
 
@@ -1050,11 +1061,11 @@ And:
 
 **Speed insight**
 
-> This journey contains 340 km of motorway currently flowing at around 110 km/h. Raising your cruising speed to 120 km/h would remove approximately 15 minutes of driving time and increase fatal-crash risk over those sections by roughly 40%.
+> This journey contains 340 km of motorway currently flowing at around 110 km/h. Raising your cruising speed to 120 km/h would save about 15 minutes and increase fatal-crash risk over those sections by roughly 41%.
 
-> How much of those 15 minutes reaches your destination depends on the constraints ahead. The Luxembourg congestion is a sustained slow section rather than a timed or capacity-limited one, so most of the saving is expected to pass through.
+> That is roughly 32 minutes of arrival benefit for every doubling of your fatal-crash exposure — the worst rate of any phase of this journey.
 
-*Note: an earlier draft of this document claimed a destination benefit of approximately four minutes here, without specifying any mechanism that would absorb the remaining eleven. That figure was not defensible and has been replaced. The pass-through fraction is the subject of the simulation specified in `SIM-PRD.md`, and the wording above should be revised once that produces a measured value.*
+*Note: an earlier draft claimed a destination benefit of approximately four minutes here, without specifying any mechanism that would absorb the remaining eleven. Simulation of this exact route (archetype C in `SIM-RESULTS.md`) gives **15.5 minutes**, with a pass-through of 0.92 — the Luxembourg section absorbs almost none of the gain. The four-minute figure was wrong and the corrected figures above are measured.*
 
 **Step 6.** The user closes Journey Intelligence and navigates normally using their preferred navigation application.
 
@@ -1237,7 +1248,7 @@ Potential insight types include:
 
 **Risk-Value Insight**
 
-> The time gained on this section costs disproportionate risk: 40% higher fatal-crash exposure for four minutes.
+> The time gained on this section costs disproportionate risk: 41% higher fatal-crash exposure for four minutes.
 
 **Attainability Insight**
 
@@ -1523,7 +1534,7 @@ Ultimately, the product should be able to take a complex journey and reduce it t
 >
 > Most of the journey is motorway.
 >
-> Under current conditions, increasing motorway cruising speed from 110 to 120 km/h is expected to improve arrival by only approximately three minutes, for roughly 40% more fatal-crash risk over those sections.
+> Increasing motorway cruising speed from 110 to 120 km/h would save about nine minutes, for roughly 41% more fatal-crash risk. That is the poorest time-for-risk trade on this journey.
 >
 > The alternative route is eight minutes slower but currently more predictable.
 
