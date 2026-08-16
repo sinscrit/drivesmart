@@ -1,31 +1,27 @@
+# Journey Intelligence
 
-Journey Intelligence
+## Product Concept & Strategy
 
-Product Concept & Strategy
+**Status:** Working concept
+**Version:** 0.1
+**Date:** August 2026
 
-Status: Working concept
-Version: 0.1
-Date: August 2026
+---
 
-⸻
-
-1. Executive Summary
+## 1. Executive Summary
 
 Journey Intelligence is a proposed journey-analysis product that complements existing navigation applications rather than replacing them.
 
 Products such as Google Maps and Waze are highly effective at answering:
 
-What route should I take, and when will I arrive?
+> What route should I take, and when will I arrive?
 
 Journey Intelligence addresses a different set of questions:
 
-What will this journey actually be like?
-
-Where will I make or lose time?
-
-How much does driving faster on a particular section actually affect my arrival time?
-
-Which parts of the journey are predictable, congested, fast, slow, urban, motorway, rural, or otherwise significant?
+- What will this journey actually be like?
+- Where will I make or lose time?
+- How much does driving faster on a particular section actually affect my arrival time?
+- Which parts of the journey are predictable, congested, fast, slow, urban, motorway, rural, or otherwise significant?
 
 The initial product would allow a user to enter a journey or share one from an existing mapping application. The system would analyze the route and convert it into a simple linear journey profile containing road characteristics, expected speeds, traffic conditions, bottlenecks, and actionable insights.
 
@@ -33,25 +29,25 @@ The central product hypothesis is that drivers can make better, safer and more e
 
 For example:
 
-Driving at 120 km/h rather than 110 km/h over the next motorway section is expected to improve arrival time by only two minutes because of congestion further ahead.
+> Driving at 120 km/h rather than 110 km/h over the next motorway section is expected to improve arrival time by only two minutes because of congestion further ahead.
 
 The initial product would therefore be a pre-trip journey intelligence tool, not another turn-by-turn navigation application.
 
-⸻
+---
 
-2. The Observation
+## 2. The Observation
 
 Modern navigation applications provide excellent route selection.
 
 A typical user receives:
 
-* a recommended route;
-* alternative routes;
-* distance;
-* estimated arrival time;
-* traffic visualization;
-* incidents and closures;
-* turn-by-turn navigation.
+- a recommended route;
+- alternative routes;
+- distance;
+- estimated arrival time;
+- traffic visualization;
+- incidents and closures;
+- turn-by-turn navigation.
 
 However, these systems generally present the journey as a route on a map plus a global ETA.
 
@@ -59,41 +55,41 @@ They provide comparatively little explanation of how that ETA is composed.
 
 A three-hour journey could contain:
 
-* 20 minutes of urban traffic;
-* 90 minutes of free-flowing motorway;
-* 25 minutes of congestion;
-* 30 minutes of secondary roads;
-* 15 minutes of local roads.
+- 20 minutes of urban traffic;
+- 90 minutes of free-flowing motorway;
+- 25 minutes of congestion;
+- 30 minutes of secondary roads;
+- 15 minutes of local roads.
 
 Those characteristics significantly affect how the journey feels and how a driver should think about progress.
 
 The current navigation paradigm largely hides this structure.
 
-⸻
+---
 
-3. The Core Problem
+## 3. The Core Problem
 
 Drivers naturally associate increased speed with earlier arrival.
 
 Over a simple unconstrained road:
 
-higher speed → lower travel time.
+> higher speed → lower travel time.
 
 Real journeys are not simple unconstrained roads.
 
 They contain downstream constraints:
 
-* congestion;
-* intersections;
-* traffic lights;
-* motorway bottlenecks;
-* slower roads;
-* urban sections;
-* roadworks;
-* queues;
-* speed restrictions;
-* difficult terrain;
-* incidents.
+- congestion;
+- intersections;
+- traffic lights;
+- motorway bottlenecks;
+- slower roads;
+- urban sections;
+- roadworks;
+- queues;
+- speed restrictions;
+- difficult terrain;
+- incidents.
 
 Consequently, additional speed during one section can produce surprisingly little improvement in final arrival time.
 
@@ -101,80 +97,81 @@ A driver may therefore take additional risk, consume additional fuel or energy, 
 
 Existing navigation products rarely communicate this relationship explicitly.
 
-⸻
+---
 
-4. Product Thesis
+## 4. Product Thesis
 
 The product thesis is:
 
-A journey should be understood as a sequence of conditions and constraints, not merely as a line between two points.
+> A journey should be understood as a sequence of conditions and constraints, not merely as a line between two points.
 
 By combining route geometry, traffic information, road characteristics and speed information, a system can construct a model of the journey and explain what is likely to happen along it.
 
 The product can then answer a new question:
 
-What speed actually provides useful progress at this point in this particular journey?
+> What speed actually provides useful progress at this point in this particular journey?
 
-This concept is referred to in this document as useful speed.
+This concept is referred to in this document as **useful speed**.
 
-⸻
+---
 
-5. Marginal Value of Speed
+## 5. Marginal Value of Speed
 
-The key analytical concept is the Marginal Value of Speed.
+The key analytical concept is the **Marginal Value of Speed**.
 
 Instead of asking:
 
-How much faster can I travel?
+> How much faster can I travel?
 
 the system asks:
 
-How much earlier will I actually arrive if I travel faster during this section?
+> How much earlier will I actually arrive if I travel faster during this section?
 
 Consider a motorway section where the legal limit is 120 km/h.
 
 The system might calculate:
 
-Cruising speed	Predicted arrival
-100 km/h	17:42
-110 km/h	17:39
-120 km/h	17:38
+| Cruising speed | Predicted arrival |
+| --- | --- |
+| 100 km/h | 17:42 |
+| 110 km/h | 17:39 |
+| 120 km/h | 17:38 |
 
 The important information is therefore not simply that 120 km/h is faster than 100 km/h.
 
 It is:
 
-Increasing from 110 to 120 km/h is currently expected to improve arrival by approximately one minute.
+> Increasing from 110 to 120 km/h is currently expected to improve arrival by approximately one minute.
 
 This can become a distinctive product metric.
 
 Possible terminology includes:
 
-* Time Value of Speed;
-* Marginal Arrival Benefit;
-* Useful Speed;
-* Effective Speed;
-* Journey Speed Value.
+- Time Value of Speed;
+- Marginal Arrival Benefit;
+- Useful Speed;
+- Effective Speed;
+- Journey Speed Value.
 
 Terminology should be validated with users.
 
-⸻
+---
 
-6. Safety Proposition
+## 6. Safety Proposition
 
 The concept has an important safety dimension.
 
 Traditional safety messaging tells drivers:
 
-Don’t speed.
+> Don't speed.
 
 Journey Intelligence can provide a personalized, situational argument:
 
-Going faster here is unlikely to get you there meaningfully sooner.
+> Going faster here is unlikely to get you there meaningfully sooner.
 
 For example:
 
-Heavy congestion begins approximately 35 km ahead. Increasing your cruising speed from 110 to 120 km/h before that point is expected to improve final arrival time by less than one minute.
+> Heavy congestion begins approximately 35 km ahead. Increasing your cruising speed from 110 to 120 km/h before that point is expected to improve final arrival time by less than one minute.
 
 The system must never recommend exceeding legal speed limits.
 
@@ -182,71 +179,71 @@ Instead, it demonstrates where additional speed within the available legal range
 
 The intended outcome is smoother, calmer and more informed driving.
 
-⸻
+---
 
-7. Existing Market
+## 7. Existing Market
 
 Research indicates substantial technical precedent for this concept, although implementations are fragmented across different industries.
 
-Rail
+### Rail
 
 Railway Driver Advisory Systems (DAS) calculate speed profiles that allow trains to meet timetable requirements while reducing unnecessary acceleration, braking and energy consumption.
 
 Examples include systems such as:
 
-* Knorr-Bremse LEADER;
-* Cubris GreenSpeed;
-* Energymiser;
-* HaslerRail DAS.
+- Knorr-Bremse LEADER;
+- Cubris GreenSpeed;
+- Energymiser;
+- HaslerRail DAS.
 
 Rail provides perhaps the strongest conceptual precedent.
 
 The fundamental question is:
 
-Given the route, constraints and required arrival time, what speed profile should the train follow?
+> Given the route, constraints and required arrival time, what speed profile should the train follow?
 
-Heavy Trucks
+### Heavy Trucks
 
 Truck manufacturers use predictive cruise and powertrain systems that look ahead along the route.
 
 Examples include:
 
-* Volvo I-See;
-* Mercedes-Benz Predictive Powertrain Control;
-* Scania Active Prediction / predictive cruise systems.
+- Volvo I-See;
+- Mercedes-Benz Predictive Powertrain Control;
+- Scania Active Prediction / predictive cruise systems.
 
 These systems use information such as:
 
-* gradients;
-* road geometry;
-* speed limits;
-* topography;
-* upcoming road conditions.
+- gradients;
+- road geometry;
+- speed limits;
+- topography;
+- upcoming road conditions.
 
 They adjust acceleration, coasting, gearing and speed to reduce fuel consumption without materially compromising journey time.
 
-Passenger Vehicles
+### Passenger Vehicles
 
 Passenger vehicles increasingly contain local predictive-driving features.
 
 Examples include:
 
-* Audi Predictive Efficiency Assist;
-* Porsche InnoDrive;
-* Mercedes-Benz ECO Assist and predictive assistance systems.
+- Audi Predictive Efficiency Assist;
+- Porsche InnoDrive;
+- Mercedes-Benz ECO Assist and predictive assistance systems.
 
 These systems can anticipate:
 
-* bends;
-* junctions;
-* roundabouts;
-* speed-limit changes;
-* traffic;
-* terrain.
+- bends;
+- junctions;
+- roundabouts;
+- speed-limit changes;
+- traffic;
+- terrain.
 
 However, these capabilities are primarily embedded within the vehicle rather than presented as a general journey-intelligence product.
 
-GLOSA
+### GLOSA
 
 Green Light Optimal Speed Advisory provides another important precedent.
 
@@ -254,123 +251,119 @@ A GLOSA system might advise a driver to approach a traffic light more slowly bec
 
 This demonstrates the underlying behavioral principle:
 
-Higher instantaneous speed does not necessarily mean greater useful progress.
+> Higher instantaneous speed does not necessarily mean greater useful progress.
 
 Journey Intelligence extends that concept from the next traffic light to potentially the entire journey.
 
-⸻
+---
 
-8. Current Navigation Market
+## 8. Current Navigation Market
 
 Major consumer navigation products include:
 
-* Google Maps;
-* Waze;
-* Apple Maps;
-* TomTom;
-* Sygic;
-* HERE-based products;
-* specialist applications such as A Better Routeplanner.
+- Google Maps;
+- Waze;
+- Apple Maps;
+- TomTom;
+- Sygic;
+- HERE-based products;
+- specialist applications such as A Better Routeplanner.
 
 These products already possess enormous advantages in:
 
-* mapping;
-* routing;
-* traffic data;
-* navigation;
-* installed user base;
-* CarPlay integration;
-* Android Auto integration.
+- mapping;
+- routing;
+- traffic data;
+- navigation;
+- installed user base;
+- CarPlay integration;
+- Android Auto integration.
 
 Competing directly with them as a general-purpose navigator would therefore create a substantial and unnecessary product challenge.
 
 Journey Intelligence should initially complement rather than replace navigation.
 
-⸻
+---
 
-9. Market Gap Hypothesis
+## 9. Market Gap Hypothesis
 
 The market contains:
 
-Navigation systems that optimize routes.
-
-Eco-routing systems that optimize route selection for energy.
-
-Fleet systems that analyze driver behavior.
-
-Vehicle systems that optimize acceleration and speed.
-
-Rail systems that optimize complete speed profiles.
+- Navigation systems that optimize routes.
+- Eco-routing systems that optimize route selection for energy.
+- Fleet systems that analyze driver behavior.
+- Vehicle systems that optimize acceleration and speed.
+- Rail systems that optimize complete speed profiles.
 
 What appears less common in mainstream consumer applications is:
 
-A whole-journey analytical layer explaining the relationship between road conditions, traffic, speed and final arrival time.
+> A whole-journey analytical layer explaining the relationship between road conditions, traffic, speed and final arrival time.
 
 The potential whitespace therefore lies at the intersection of:
 
-navigation + predictive traffic + road intelligence + speed optimization + driver explanation.
+> navigation + predictive traffic + road intelligence + speed optimization + driver explanation.
 
-⸻
+---
 
-10. Product Positioning
+## 10. Product Positioning
 
 Journey Intelligence should not initially position itself as:
 
-“A better Google Maps.”
+> "A better Google Maps."
 
 Instead:
 
-Understand your drive before you start.
+> Understand your drive before you start.
 
 Google Maps/Waze can continue answering:
 
-How do I get there?
+> How do I get there?
 
 Journey Intelligence answers:
 
-What should I expect along the way?
+> What should I expect along the way?
 
 and:
 
-What will actually affect when I arrive?
+> What will actually affect when I arrive?
 
-⸻
+---
 
-11. Initial User Experience
+## 11. Initial User Experience
 
 The MVP should have two principal entry mechanisms.
 
-A. Plan a Journey
+### A. Plan a Journey
 
 The user enters:
 
-* origin;
-* destination;
-* departure time.
+- origin;
+- destination;
+- departure time.
 
 The application calculates and analyzes the journey.
 
-B. Share a Journey
+### B. Share a Journey
 
 The user plans a journey using an existing application such as Google Maps or Waze.
 
 They select:
 
-Share → Journey Intelligence
+> Share → Journey Intelligence
 
 The application extracts whatever journey information is available from the shared link, such as:
 
-* destination;
-* origin where available;
-* waypoints where available.
+- destination;
+- origin where available;
+- waypoints where available.
 
 It then reconstructs and analyzes an equivalent route.
 
 The MVP should not depend on perfectly recovering the exact road-by-road route selected in the originating application.
 
-⸻
+---
 
-12. The Journey Timeline
+## 12. The Journey Timeline
 
 The principal interface should probably not be another map.
 
@@ -378,105 +371,90 @@ Instead, the route can be transformed into a linear representation of the journe
 
 For example:
 
+```
 HOME
-
-↓
-18 km — Urban
-Expected 35–50 km/h
-Moderate traffic
-
-↓
-
-142 km — Motorway
-Expected 105–115 km/h
-Free flowing
-
-↓
-
-23 km — Congestion
-Expected 35–55 km/h
-~25 minutes
-
-↓
-
-96 km — Motorway
-Expected 105–120 km/h
-Free flowing
-
-↓
-
-12 km — Urban
-Expected 25–40 km/h
-
-↓
-
+  ↓
+  18 km — Urban
+  Expected 35–50 km/h
+  Moderate traffic
+  ↓
+  142 km — Motorway
+  Expected 105–115 km/h
+  Free flowing
+  ↓
+  23 km — Congestion
+  Expected 35–55 km/h
+  ~25 minutes
+  ↓
+  96 km — Motorway
+  Expected 105–120 km/h
+  Free flowing
+  ↓
+  12 km — Urban
+  Expected 25–40 km/h
+  ↓
 DESTINATION
+```
 
 This creates a mental model of the journey that conventional maps do not readily provide.
 
-⸻
+---
 
-13. Journey Summary
+## 13. Journey Summary
 
 The timeline can be accompanied by a high-level summary.
 
 For example:
 
-Expected journey: 4h 23m
-
-Motorway: 78%
-
-Urban: 12%
-
-Secondary roads: 10%
-
-Expected congestion: 37 minutes
-
-Main bottleneck: Luxembourg approach
-
-Journey uncertainty: ±18 minutes
+- **Expected journey:** 4h 23m
+- **Motorway:** 78%
+- **Urban:** 12%
+- **Secondary roads:** 10%
+- **Expected congestion:** 37 minutes
+- **Main bottleneck:** Luxembourg approach
+- **Journey uncertainty:** ±18 minutes
 
 Useful-speed insight:
 
-Travelling at 120 rather than 110 km/h during the main motorway sections is currently expected to improve arrival time by approximately four minutes.
+> Travelling at 120 rather than 110 km/h during the main motorway sections is currently expected to improve arrival time by approximately four minutes.
 
 The objective is not to overwhelm the user with road data.
 
 It is to convert complex geographic and traffic information into a small number of understandable insights.
 
-⸻
+---
 
-14. Route Comparison
+## 14. Route Comparison
 
 The product can eventually compare routes using dimensions beyond ETA.
 
 For example:
 
-Route A
+**Route A**
 
-3h 52m
-Mostly motorway
-Higher congestion exposure
-Arrival uncertainty ±24m
+- 3h 52m
+- Mostly motorway
+- Higher congestion exposure
+- Arrival uncertainty ±24m
 
-Route B
+**Route B**
 
-3h 57m
-More secondary roads
-Lower congestion exposure
-Arrival uncertainty ±11m
+- 3h 57m
+- More secondary roads
+- Lower congestion exposure
+- Arrival uncertainty ±11m
 
 Conventional navigation might emphasize Route A because it is nominally five minutes faster.
 
 Journey Intelligence might explain:
 
-Route A is approximately five minutes faster under expected conditions, but Route B is substantially more predictable.
+> Route A is approximately five minutes faster under expected conditions, but Route B is substantially more predictable.
 
-This introduces the concept of route quality rather than simply route speed.
+This introduces the concept of **route quality** rather than simply route speed.
 
-⸻
+---
 
-15. Route Resilience
+## 15. Route Resilience
 
 A longer-term product capability is route resilience.
 
@@ -488,157 +466,127 @@ A parallel route through a denser road network might allow numerous rerouting op
 
 A future resilience score could consider:
 
-* availability of alternative roads;
-* historical congestion volatility;
-* incident frequency;
-* dependence on bridges/tunnels;
-* motorway bottlenecks;
-* rerouting possibilities;
-* variability of historical journey times.
+- availability of alternative roads;
+- historical congestion volatility;
+- incident frequency;
+- dependence on bridges/tunnels;
+- motorway bottlenecks;
+- rerouting possibilities;
+- variability of historical journey times.
 
 This would help distinguish:
 
-fastest expected route
+> fastest expected route
 
 from:
 
-most reliable route.
+> most reliable route.
 
-⸻
+---
 
-16. Technical Concept
+## 16. Technical Concept
 
 The initial system would combine multiple data sources.
 
-Routing Layer
+### Routing Layer
 
 Potential providers include:
 
-* Google Routes;
-* HERE;
-* TomTom;
-* OpenStreetMap-based routing engines.
+- Google Routes;
+- HERE;
+- TomTom;
+- OpenStreetMap-based routing engines.
 
 This layer provides:
 
-* route geometry;
-* distance;
-* ETA;
-* traffic-aware ETA;
-* alternatives;
-* route steps.
+- route geometry;
+- distance;
+- ETA;
+- traffic-aware ETA;
+- alternatives;
+- route steps.
 
-Traffic Layer
+### Traffic Layer
 
 Provides:
 
-* expected congestion;
-* traffic speed;
-* traffic severity;
-* traffic-aware journey duration.
+- expected congestion;
+- traffic speed;
+- traffic severity;
+- traffic-aware journey duration.
 
 Google Routes, HERE and TomTom are potential sources.
 
-Road Intelligence Layer
+### Road Intelligence Layer
 
 OpenStreetMap is particularly useful for:
 
-* motorway/primary/secondary/residential classification;
-* speed limits;
-* road surfaces;
-* lane counts where available;
-* access restrictions;
-* road characteristics.
+- motorway/primary/secondary/residential classification;
+- speed limits;
+- road surfaces;
+- lane counts where available;
+- access restrictions;
+- road characteristics.
 
 Commercial datasets from HERE or TomTom may later supplement this information.
 
-⸻
+---
 
-17. Processing Pipeline
+## 17. Processing Pipeline
 
 The conceptual pipeline is:
 
+```
 Journey input/share
-
-↓
-
+  ↓
 Origin + destination + waypoints
-
-↓
-
+  ↓
 Routing engine
-
-↓
-
+  ↓
 Detailed route geometry
-
-↓
-
+  ↓
 Map matching
-
-↓
-
+  ↓
 Road classification
-
-↓
-
+  ↓
 Traffic enrichment
-
-↓
-
+  ↓
 Raw route segments
-
-↓
-
+  ↓
 Segment aggregation
-
-↓
-
+  ↓
 Expected-speed model
-
-↓
-
+  ↓
 Journey timeline
-
-↓
-
+  ↓
 Speed-value analysis
-
-↓
-
+  ↓
 User insights
+```
 
 A critical technical capability will be converting potentially hundreds or thousands of raw road segments into perhaps 5–15 meaningful journey phases.
 
 That segmentation and interpretation engine could become an important proprietary component of the product.
 
-⸻
+---
 
-18. Speed Model
+## 18. Speed Model
 
 The system should distinguish several concepts.
 
-Legal Speed
+**Legal Speed** — the applicable speed limit.
 
-The applicable speed limit.
+**Road Capability** — the speed implied by the road type and geometry under suitable conditions.
 
-Road Capability
+**Expected Speed** — the speed realistically achievable given traffic and road conditions.
 
-The speed implied by the road type and geometry under suitable conditions.
-
-Expected Speed
-
-The speed realistically achievable given traffic and road conditions.
-
-Useful Speed
-
-The speed beyond which additional speed provides progressively less meaningful improvement in final arrival time.
+**Useful Speed** — the speed beyond which additional speed provides progressively less meaningful improvement in final arrival time.
 
 The relationship between these values becomes part of the journey model.
 
-⸻
+---
 
-19. Initial Speed Analysis
+## 19. Initial Speed Analysis
 
 The first implementation does not need a sophisticated machine-learning model.
 
@@ -646,28 +594,29 @@ The system could initially simulate several legal speed strategies.
 
 For example:
 
-* maximum 90 km/h;
-* maximum 100 km/h;
-* maximum 110 km/h;
-* applicable legal/traffic speed.
+- maximum 90 km/h;
+- maximum 100 km/h;
+- maximum 110 km/h;
+- applicable legal/traffic speed.
 
 For each scenario, the system calculates expected arrival.
 
 This produces something like:
 
-Strategy	Expected arrival
-Max 90	18:53
-Max 100	18:47
-Max 110	18:43
-Normal legal-speed profile	18:41
+| Strategy | Expected arrival |
+| --- | --- |
+| Max 90 | 18:53 |
+| Max 100 | 18:47 |
+| Max 110 | 18:43 |
+| Normal legal-speed profile | 18:41 |
 
 The product can then communicate diminishing returns.
 
 More sophisticated traffic distributions and probabilistic models can follow later.
 
-⸻
+---
 
-20. MVP Definition
+## 20. MVP Definition
 
 The MVP should be deliberately narrow.
 
@@ -675,161 +624,137 @@ It should not attempt to provide turn-by-turn navigation.
 
 It should provide a pre-trip journey briefing.
 
-MVP Input
+### MVP Input
 
-* origin;
-* destination;
-* departure time;
+- origin;
+- destination;
+- departure time;
 
 or:
 
-* shared mapping/navigation link.
+- shared mapping/navigation link.
 
-MVP Output
+### MVP Output
 
-* expected journey duration;
-* route distance;
-* linear journey timeline;
-* road-type breakdown;
-* congestion breakdown;
-* expected speeds;
-* major bottlenecks;
-* alternative-route comparison where useful;
-* initial useful-speed analysis.
+- expected journey duration;
+- route distance;
+- linear journey timeline;
+- road-type breakdown;
+- congestion breakdown;
+- expected speeds;
+- major bottlenecks;
+- alternative-route comparison where useful;
+- initial useful-speed analysis.
 
 The user can subsequently continue navigation using Google Maps, Waze or another preferred application.
 
-⸻
+---
 
-21. Why Start Pre-Trip?
+## 21. Why Start Pre-Trip?
 
 A pre-trip product avoids several difficult problems:
 
-* replacing established navigation applications;
-* building complete navigation UI;
-* Android Auto navigation requirements;
-* CarPlay navigation requirements;
-* continuous GPS navigation;
-* voice guidance;
-* rerouting;
-* background navigation complexity.
+- replacing established navigation applications;
+- building complete navigation UI;
+- Android Auto navigation requirements;
+- CarPlay navigation requirements;
+- continuous GPS navigation;
+- voice guidance;
+- rerouting;
+- background navigation complexity.
 
 It also provides a clear usage moment:
 
-Before a significant journey, understand what you’re about to encounter.
+> Before a significant journey, understand what you're about to encounter.
 
 The concept is likely to have greater initial value for longer or unfamiliar journeys than short everyday trips.
 
-⸻
+---
 
-22. Initial Target Use Cases
+## 22. Initial Target Use Cases
 
 Potentially strong early use cases include:
 
-* long-distance journeys;
-* holiday driving;
-* unfamiliar routes;
-* cross-border travel;
-* business travel;
-* airport journeys;
-* professional drivers;
-* EV drivers;
-* motorhome/caravan users;
-* motorcycle touring;
-* journeys during heavy traffic periods.
+- long-distance journeys;
+- holiday driving;
+- unfamiliar routes;
+- cross-border travel;
+- business travel;
+- airport journeys;
+- professional drivers;
+- EV drivers;
+- motorhome/caravan users;
+- motorcycle touring;
+- journeys during heavy traffic periods.
 
 The product should initially be validated against these higher-value journeys rather than attempting to optimize everyday five-minute trips.
 
-⸻
+---
 
-23. Potential Future Evolution
+## 23. Potential Future Evolution
 
 If the pre-trip concept proves valuable, the product could progressively become more real-time.
 
 Possible future capabilities include:
 
-Live Journey Companion
+**Live Journey Companion** — continue updating journey intelligence while another navigation application handles navigation.
 
-Continue updating journey intelligence while another navigation application handles navigation.
+**Dynamic Useful-Speed Advice** — recalculate the value of speed as congestion changes.
 
-Dynamic Useful-Speed Advice
+**Incident Sensitivity** — explain how an accident or closure changes route risk.
 
-Recalculate the value of speed as congestion changes.
+**Route Reliability** — predict arrival-time distributions rather than a single ETA.
 
-Incident Sensitivity
+**Vehicle Awareness** — incorporate:
 
-Explain how an accident or closure changes route risk.
+- EV range;
+- fuel consumption;
+- vehicle efficiency;
+- towing;
+- vehicle speed limitations.
 
-Route Reliability
+**Driver Preferences** — optimize journeys according to preferences such as:
 
-Predict arrival-time distributions rather than a single ETA.
+- predictability;
+- comfort;
+- motorway preference;
+- fuel economy;
+- scenic driving;
+- reduced congestion;
+- fewer difficult junctions.
 
-Vehicle Awareness
+---
 
-Incorporate:
-
-* EV range;
-* fuel consumption;
-* vehicle efficiency;
-* towing;
-* vehicle speed limitations.
-
-Driver Preferences
-
-Optimize journeys according to preferences such as:
-
-* predictability;
-* comfort;
-* motorway preference;
-* fuel economy;
-* scenic driving;
-* reduced congestion;
-* fewer difficult junctions.
-
-⸻
-
-24. Potential Business Models
+## 24. Potential Business Models
 
 Business-model assumptions remain unvalidated.
 
 Possible models include:
 
-Consumer Subscription
+**Consumer Subscription** — premium journey analysis for frequent long-distance drivers.
 
-Premium journey analysis for frequent long-distance drivers.
+**Freemium** — basic journey breakdown free, with advanced reliability, speed-value and historical analysis paid.
 
-Freemium
+**Fleet / Professional Driver Product** — journey intelligence for fleets, delivery operators or professional drivers.
 
-Basic journey breakdown free, with advanced reliability, speed-value and historical analysis paid.
+**OEM Licensing** — provide the analysis engine to vehicle manufacturers.
 
-Fleet / Professional Driver Product
+**Navigation/Data Partnerships** — provide journey-intelligence APIs to existing navigation products.
 
-Journey intelligence for fleets, delivery operators or professional drivers.
+**Insurance / Safety Applications** — potentially use journey intelligence to support safer driving programs, subject to significant privacy and regulatory considerations.
 
-OEM Licensing
+---
 
-Provide the analysis engine to vehicle manufacturers.
-
-Navigation/Data Partnerships
-
-Provide journey-intelligence APIs to existing navigation products.
-
-Insurance / Safety Applications
-
-Potentially use journey intelligence to support safer driving programs, subject to significant privacy and regulatory considerations.
-
-⸻
-
-25. Strategic Advantage
+## 25. Strategic Advantage
 
 The product should avoid competing in areas where incumbents have overwhelming advantages.
 
 It does not need to own:
 
-* maps;
-* basic routing;
-* traffic collection;
-* turn-by-turn navigation.
+- maps;
+- basic routing;
+- traffic collection;
+- turn-by-turn navigation.
 
 Instead, it should build intelligence on top of those capabilities.
 
@@ -844,91 +769,71 @@ Potential proprietary value lies in:
 
 The objective is therefore not to build another mapping database.
 
-It is to build a journey reasoning engine.
+It is to build a **journey reasoning engine**.
 
-⸻
+---
 
-26. Key Product Hypotheses
+## 26. Key Product Hypotheses
 
 The project currently depends on several hypotheses.
 
-H1 — Users want journey understanding
+**H1 — Users want journey understanding.** Drivers care about more than ETA when undertaking substantial journeys.
 
-Drivers care about more than ETA when undertaking substantial journeys.
+**H2 — Linear representation adds value.** A journey timeline communicates useful information that is difficult to perceive from a conventional map.
 
-H2 — Linear representation adds value
+**H3 — Speed-value information changes behavior.** Showing that additional speed produces negligible arrival benefit can influence driving decisions.
 
-A journey timeline communicates useful information that is difficult to perceive from a conventional map.
+**H4 — Existing data is sufficient.** Routing, traffic and road datasets contain enough information to construct sufficiently accurate journey profiles.
 
-H3 — Speed-value information changes behavior
+**H5 — Sharing provides viable distribution.** Users will share or submit routes from existing navigation tools rather than requiring Journey Intelligence to replace them.
 
-Showing that additional speed produces negligible arrival benefit can influence driving decisions.
-
-H4 — Existing data is sufficient
-
-Routing, traffic and road datasets contain enough information to construct sufficiently accurate journey profiles.
-
-H5 — Sharing provides viable distribution
-
-Users will share or submit routes from existing navigation tools rather than requiring Journey Intelligence to replace them.
-
-H6 — Analysis can be sufficiently simple
-
-The system can turn complex route data into useful conclusions without overwhelming users.
+**H6 — Analysis can be sufficiently simple.** The system can turn complex route data into useful conclusions without overwhelming users.
 
 These should be treated as hypotheses requiring validation rather than assumptions.
 
-⸻
+---
 
-27. Principal Risks and Open Questions
+## 27. Principal Risks and Open Questions
 
-User Demand
+### User Demand
 
 Will drivers actually consult another application before travelling?
 
-Frequency
+### Frequency
 
 Are sufficiently long or complex journeys frequent enough to support a standalone consumer product?
 
-Route Sharing
-
-How reliably can routes shared from Google Maps, Waze and Apple Maps be
-
-
-
-27. Principal Risks and Open Questions — Continued
-
-Route Sharing
+### Route Sharing
 
 How reliably can routes shared from Google Maps, Waze and Apple Maps be interpreted?
 
 In particular:
 
-* Does the shared object contain only a destination?
-* Does it preserve origin?
-* Are waypoints preserved?
-* Can the specifically selected alternative route be identified?
-* If not, how closely can the system reconstruct it?
+- Does the shared object contain only a destination?
+- Does it preserve origin?
+- Are waypoints preserved?
+- Can the specifically selected alternative route be identified?
+- If not, how closely can the system reconstruct it?
 
 The MVP should tolerate imperfect route transfer by clearly describing the analyzed route rather than claiming that it is necessarily identical to the route shown by the originating navigation application.
 
-Data Quality
+### Data Quality
 
 OpenStreetMap coverage varies geographically.
 
 Attributes such as:
 
-* road classification;
-* speed limit;
-* number of lanes;
-* road surface;
-* access restrictions
+- road classification;
+- speed limit;
+- number of lanes;
+- road surface;
+- access restrictions
 
 may be incomplete or inconsistent.
 
 The product must determine which attributes are sufficiently reliable for consumer-facing recommendations.
 
-Traffic Accuracy
+### Traffic Accuracy
 
 Current traffic is inherently dynamic.
 
@@ -936,220 +841,192 @@ A prediction made before departure may change substantially during a long journe
 
 The product therefore needs to distinguish between:
 
-* known road characteristics;
-* current traffic conditions;
-* predicted conditions;
-* uncertain conditions.
+- known road characteristics;
+- current traffic conditions;
+- predicted conditions;
+- uncertain conditions.
 
-Speed-Modelling Accuracy
+### Speed-Modelling Accuracy
 
 The relationship between speed and final arrival time is more complicated than simply dividing distance by speed.
 
 Real journeys involve:
 
-* acceleration and deceleration;
-* junctions;
-* traffic lights;
-* variable traffic;
-* queues;
-* road geometry;
-* overtaking;
-* speed-limit changes;
-* incidents.
+- acceleration and deceleration;
+- junctions;
+- traffic lights;
+- variable traffic;
+- queues;
+- road geometry;
+- overtaking;
+- speed-limit changes;
+- incidents.
 
 The initial model can be approximate, but the product must avoid presenting false precision.
 
-Data Licensing
+### Data Licensing
 
 Combining Google, OpenStreetMap, HERE, TomTom or other datasets may introduce restrictions concerning:
 
-* caching;
-* derived data;
-* displaying data from competing mapping providers;
-* attribution;
-* long-term storage;
-* commercial usage.
+- caching;
+- derived data;
+- displaying data from competing mapping providers;
+- attribution;
+- long-term storage;
+- commercial usage.
 
 Licensing should be investigated before the architecture becomes dependent on a particular combination of providers.
 
-API Economics
+### API Economics
 
 Traffic-aware routing and commercial road data can become expensive at scale.
 
 The cost per analyzed journey therefore needs to be understood early.
 
-Driver Distraction
+### Driver Distraction
 
 If the product evolves into an in-drive companion, recommendations must be extremely simple and appropriately timed.
 
 The pre-trip MVP largely avoids this problem.
 
-⸻
+---
 
-28. Important Product Boundary
+## 28. Important Product Boundary
 
 The system should distinguish between analysis and instruction.
 
 The objective is not to tell a driver:
 
-Drive at exactly 107 km/h.
+> Drive at exactly 107 km/h.
 
 Such precision would be inappropriate given changing real-world conditions.
 
 Instead, the product should communicate conclusions such as:
 
-There is little journey-time benefit from maintaining the maximum permitted speed over the next motorway section.
+> There is little journey-time benefit from maintaining the maximum permitted speed over the next motorway section.
 
 or:
 
-Traffic conditions ahead currently determine most of your arrival time.
+> Traffic conditions ahead currently determine most of your arrival time.
 
 or:
 
-This is the section where differences in cruising speed have the greatest effect on arrival time.
+> This is the section where differences in cruising speed have the greatest effect on arrival time.
 
 The system provides decision intelligence, while the driver remains responsible for appropriate speed and driving behavior.
 
-⸻
+---
 
-29. Information Hierarchy
+## 29. Information Hierarchy
 
 The product should resist the temptation to expose every available piece of data.
 
 A useful hierarchy could be:
 
-Level 1 — Journey at a Glance
+### Level 1 — Journey at a Glance
 
 Immediately visible:
 
-* ETA;
-* distance;
-* major journey phases;
-* congestion exposure;
-* principal bottleneck;
-* one or two important insights.
+- ETA;
+- distance;
+- major journey phases;
+- congestion exposure;
+- principal bottleneck;
+- one or two important insights.
 
-Level 2 — Journey Timeline
+### Level 2 — Journey Timeline
 
 A linear representation showing:
 
-* road types;
-* expected speeds;
-* traffic;
-* major transitions;
-* significant constraints.
+- road types;
+- expected speeds;
+- traffic;
+- major transitions;
+- significant constraints.
 
-Level 3 — Detailed Analysis
+### Level 3 — Detailed Analysis
 
 For users who want more information:
 
-* individual segments;
-* speed limits;
-* traffic assumptions;
-* route alternatives;
-* time-at-speed scenarios;
-* reliability;
-* road surfaces;
-* detailed bottlenecks.
+- individual segments;
+- speed limits;
+- traffic assumptions;
+- route alternatives;
+- time-at-speed scenarios;
+- reliability;
+- road surfaces;
+- detailed bottlenecks.
 
 This keeps the primary experience simple while allowing the underlying analytical richness to remain accessible.
 
-⸻
+---
 
-30. Example User Journey
+## 30. Example User Journey
 
 A user intends to drive from Brussels to Strasbourg.
 
 They normally use Google Maps.
 
-Step 1
+**Step 1.** They search for the journey in Google Maps.
 
-They search for the journey in Google Maps.
-
-Step 2
-
-They use the operating system’s Share function and select Journey Intelligence.
+**Step 2.** They use the operating system's Share function and select Journey Intelligence.
 
 Alternatively, they enter Brussels and Strasbourg directly into Journey Intelligence.
 
-Step 3
+**Step 3.** Journey Intelligence resolves the origin, destination and any available waypoints.
 
-Journey Intelligence resolves the origin, destination and any available waypoints.
+**Step 4.** The system calculates an equivalent traffic-aware route and enriches it with road information.
 
-Step 4
+**Step 5.** The user receives:
 
-The system calculates an equivalent traffic-aware route and enriches it with road information.
-
-Step 5
-
-The user receives:
-
-Brussels → Strasbourg
-435 km
-Expected: 4h 31m
-Typical uncertainty: ±20m
+> Brussels → Strasbourg
+> 435 km
+> Expected: 4h 31m
+> Typical uncertainty: ±20m
 
 The journey timeline shows:
 
-Brussels urban
-
-18 km · ~31 min
-
-↓
-
-Motorway
-
-167 km · ~1h31
-
-↓
-
-Luxembourg congestion
-
-31 km · ~39 min
-
-↓
-
-Motorway
-
-173 km · ~1h36
-
-↓
-
-Strasbourg approach
-
-46 km · ~54 min
+```
+Brussels urban        18 km · ~31 min
+  ↓
+Motorway             167 km · ~1h31
+  ↓
+Luxembourg congestion 31 km · ~39 min
+  ↓
+Motorway             173 km · ~1h36
+  ↓
+Strasbourg approach   46 km · ~54 min
+```
 
 The system highlights:
 
-Main constraint
+**Main constraint**
 
-Congestion approaching Luxembourg currently accounts for approximately 22 minutes of additional journey time.
+> Congestion approaching Luxembourg currently accounts for approximately 22 minutes of additional journey time.
 
 And:
 
-Speed insight
+**Speed insight**
 
-Under current conditions, increasing motorway cruising speed from 110 to 120 km/h would theoretically save considerably more time than is expected to survive through downstream traffic. Estimated destination-arrival benefit: approximately four minutes.
+> Under current conditions, increasing motorway cruising speed from 110 to 120 km/h would theoretically save considerably more time than is expected to survive through downstream traffic. Estimated destination-arrival benefit: approximately four minutes.
 
-Step 6
-
-The user closes Journey Intelligence and navigates normally using their preferred navigation application.
+**Step 6.** The user closes Journey Intelligence and navigates normally using their preferred navigation application.
 
 This is the complete MVP experience.
 
-⸻
+---
 
-31. The Linear Journey Model
+## 31. The Linear Journey Model
 
 The linear timeline could become the visual identity of the product.
 
 Maps are excellent for answering:
 
-Where am I going?
+> Where am I going?
 
 A timeline may be better for answering:
 
-What happens next?
+> What happens next?
 
 Distance along the horizontal axis represents progress through the journey.
 
@@ -1157,27 +1034,28 @@ Different sections represent different journey environments.
 
 For example:
 
+```
 START
-
 Urban ━━━ Motorway ━━━━━━━━━━━ Traffic ━━━ Motorway ━━━━━━━━━ Secondary ━━━ Destination
+```
 
 Important events can be attached to positions along the line:
 
-* congestion;
-* tolls;
-* border crossings;
-* difficult junctions;
-* charging/fuel stops;
-* roadworks;
-* major speed changes;
-* weather changes;
-* rest opportunities.
+- congestion;
+- tolls;
+- border crossings;
+- difficult junctions;
+- charging/fuel stops;
+- roadworks;
+- major speed changes;
+- weather changes;
+- rest opportunities.
 
 The timeline therefore has the potential to evolve beyond speed analysis into a general journey briefing interface.
 
-⸻
+---
 
-32. Broader Product Opportunity
+## 32. Broader Product Opportunity
 
 The initial insight concerns speed.
 
@@ -1185,107 +1063,84 @@ However, the underlying product may ultimately be broader.
 
 Once a journey has been transformed into a structured timeline, many other questions become possible:
 
-Where will the difficult parts be?
-
-When should I take a break?
-
-Where is traffic most uncertain?
-
-Where will fuel consumption increase?
-
-Where will an EV consume significantly more energy?
-
-Which route is less stressful?
-
-Which route has fewer bottlenecks?
-
-Which route is easier when towing?
-
-Which route provides more opportunities to stop?
-
-Where does weather become significant?
+- Where will the difficult parts be?
+- When should I take a break?
+- Where is traffic most uncertain?
+- Where will fuel consumption increase?
+- Where will an EV consume significantly more energy?
+- Which route is less stressful?
+- Which route has fewer bottlenecks?
+- Which route is easier when towing?
+- Which route provides more opportunities to stop?
+- Where does weather become significant?
 
 This suggests that the deeper product may not ultimately be a speed advisory system.
 
-It may be a journey intelligence platform, with useful-speed analysis as its first distinctive capability.
+It may be a **journey intelligence platform**, with useful-speed analysis as its first distinctive capability.
 
-⸻
+---
 
-33. Data Architecture Direction
+## 33. Data Architecture Direction
 
-The architecture should deliberately separate raw data providers from the product’s analytical model.
+The architecture should deliberately separate raw data providers from the product's analytical model.
 
 A simplified architecture is:
 
+```
 Input
-
-↓
-
+  ↓
 Route Provider Adapter
-
-↓
-
+  ↓
 Canonical Route Model
-
-↓
-
+  ↓
 Road Enrichment
-
-↓
-
+  ↓
 Traffic Enrichment
-
-↓
-
+  ↓
 Journey Segmentation
-
-↓
-
+  ↓
 Journey Intelligence Engine
-
-↓
-
+  ↓
 Presentation API
-
-↓
-
+  ↓
 Web / Mobile UI
+```
 
 This allows Google, HERE, TomTom or other providers to be substituted without rewriting the product logic.
 
-The proprietary model should operate on a normalized internal representation rather than directly on a particular provider’s response format.
+The proprietary model should operate on a normalized internal representation rather than directly on a particular provider's response format.
 
-⸻
+---
 
-34. Canonical Segment Model
+## 34. Canonical Segment Model
 
 Internally, each route segment could eventually contain attributes such as:
 
-* segment ID;
-* start/end coordinates;
-* length;
-* road classification;
-* road name;
-* legal speed limit;
-* expected speed;
-* free-flow speed;
-* traffic speed;
-* congestion classification;
-* surface;
-* lanes;
-* gradient;
-* urban/rural classification;
-* historical variability;
-* predicted traversal time;
-* confidence score.
+- segment ID;
+- start/end coordinates;
+- length;
+- road classification;
+- road name;
+- legal speed limit;
+- expected speed;
+- free-flow speed;
+- traffic speed;
+- congestion classification;
+- surface;
+- lanes;
+- gradient;
+- urban/rural classification;
+- historical variability;
+- predicted traversal time;
+- confidence score.
 
 Not every source will provide every attribute.
 
 The canonical model should therefore support missing data and record the source/confidence of each value.
 
-⸻
+---
 
-35. Journey Segmentation Engine
+## 35. Journey Segmentation Engine
 
 Raw map data may divide a journey into hundreds or thousands of road segments.
 
@@ -1295,371 +1150,328 @@ The segmentation engine should merge adjacent segments when their characteristic
 
 A new meaningful journey phase might be created when there is a significant change in:
 
-* road class;
-* expected speed;
-* legal speed;
-* traffic;
-* urban/rural environment;
-* surface;
-* road conditions;
-* route complexity.
+- road class;
+- expected speed;
+- legal speed;
+- traffic;
+- urban/rural environment;
+- surface;
+- road conditions;
+- route complexity.
 
 For example, forty consecutive motorway segments might become:
 
-Motorway — 84 km — approximately 46 minutes
+> Motorway — 84 km — approximately 46 minutes
 
 while a significant congestion event creates a separate phase:
 
-Heavy congestion — 11 km — approximately 22 minutes
+> Heavy congestion — 11 km — approximately 22 minutes
 
-The quality of this abstraction is likely to be one of the product’s most important technical differentiators.
+The quality of this abstraction is likely to be one of the product's most important technical differentiators.
 
-⸻
+---
 
-36. Journey Intelligence Engine
+## 36. Journey Intelligence Engine
 
 The intelligence engine sits above segmentation.
 
 Its role is not merely to calculate statistics but to determine:
 
-What is worth telling the user?
+> What is worth telling the user?
 
 Potential insight types include:
 
-Bottleneck Insight
+**Bottleneck Insight**
 
-Most expected delay occurs during a 17 km section approaching Antwerp.
+> Most expected delay occurs during a 17 km section approaching Antwerp.
 
-Speed-Value Insight
+**Speed-Value Insight**
 
-Increasing cruising speed during the next motorway phase produces little expected destination-time benefit.
+> Increasing cruising speed during the next motorway phase produces little expected destination-time benefit.
 
-Reliability Insight
+**Reliability Insight**
 
-This journey has unusually high arrival-time uncertainty because of traffic around Brussels.
+> This journey has unusually high arrival-time uncertainty because of traffic around Brussels.
 
-Alternative-Route Insight
+**Alternative-Route Insight**
 
-The alternative route is seven minutes slower on average but considerably less exposed to congestion.
+> The alternative route is seven minutes slower on average but considerably less exposed to congestion.
 
-Road-Character Insight
+**Road-Character Insight**
 
-The final 45 minutes contain predominantly slower secondary roads.
+> The final 45 minutes contain predominantly slower secondary roads.
 
 This insight-selection layer may eventually become as important as the underlying calculations.
 
-⸻
+---
 
-37. Competitive Strategy
+## 37. Competitive Strategy
 
 The product should avoid competing with navigation incumbents on their strongest dimensions.
 
 Do not initially compete on:
 
-* map quality;
-* POI search;
-* turn-by-turn directions;
-* voice navigation;
-* live rerouting;
-* traffic collection;
-* street imagery.
+- map quality;
+- POI search;
+- turn-by-turn directions;
+- voice navigation;
+- live rerouting;
+- traffic collection;
+- street imagery.
 
 Instead, leverage existing infrastructure and compete on:
 
-* interpretation;
-* explanation;
-* journey understanding;
-* predictive insights;
-* route quality;
-* useful-speed analysis.
+- interpretation;
+- explanation;
+- journey understanding;
+- predictive insights;
+- route quality;
+- useful-speed analysis.
 
 This creates a complementary position rather than a replacement proposition.
 
-⸻
+---
 
-38. Distribution Hypothesis
+## 38. Distribution Hypothesis
 
 A major strategic question remains:
 
-Why will somebody open this product if Google Maps is already open?
+> Why will somebody open this product if Google Maps is already open?
 
 Several possible answers should be tested.
 
-Share From Maps
+**Share From Maps** — the lowest-friction hypothesis:
 
-The lowest-friction hypothesis:
+> Google Maps/Waze → Share → Journey Intelligence
 
-Google Maps/Waze → Share → Journey Intelligence
+**Long-Trip Planning** — users deliberately consult Journey Intelligence before substantial journeys.
 
-Long-Trip Planning
+**Web Analysis** — a lightweight website allows users to paste a Maps link without installing an application. This may be particularly attractive for early validation.
 
-Users deliberately consult Journey Intelligence before substantial journeys.
+**Browser / Platform Integration** — later integrations could reduce friction further.
 
-Web Analysis
-
-A lightweight website allows users to paste a Maps link without installing an application.
-
-This may be particularly attractive for early validation.
-
-Browser / Platform Integration
-
-Later integrations could reduce friction further.
-
-Professional Use
-
-Professional drivers or fleet operators may have sufficient recurring value to integrate the product directly into their workflow.
+**Professional Use** — professional drivers or fleet operators may have sufficient recurring value to integrate the product directly into their workflow.
 
 The MVP should test distribution behavior just as seriously as technical feasibility.
 
-⸻
+---
 
-39. MVP Delivery Form
+## 39. MVP Delivery Form
 
 A native mobile application may not be necessary initially.
 
 A particularly lean validation product could simply be:
 
-journeyintelligence.example
+> journeyintelligence.example
 
 with:
 
-Paste a Google Maps/Waze link
+> Paste a Google Maps/Waze link
 
 or:
 
-From: ______
-To: ______
-Departure: ______
+> From: \_\_\_\_\_\_
+> To: \_\_\_\_\_\_
+> Departure: \_\_\_\_\_\_
 
 followed by:
 
-Analyze Journey
+> Analyze Journey
 
 This produces the journey briefing.
 
 Such an implementation could validate the central value proposition before investing heavily in native applications, sharing extensions or vehicle integrations.
 
-⸻
+---
 
-40. MVP Success Criteria
+## 40. MVP Success Criteria
 
 The first prototype should answer four questions.
 
-1. Can we build the journey model?
+**1. Can we build the journey model?** Can available data reliably produce meaningful route segments?
 
-Can available data reliably produce meaningful route segments?
+**2. Can we calculate useful speed?** Can we produce defensible estimates of how different legal cruising-speed strategies affect final arrival time?
 
-2. Can we calculate useful speed?
+**3. Do users understand the timeline?** Does the linear journey representation communicate something that a conventional map does not?
 
-Can we produce defensible estimates of how different legal cruising-speed strategies affect final arrival time?
+**4. Do users care?** After seeing the analysis, do drivers say:
 
-3. Do users understand the timeline?
-
-Does the linear journey representation communicate something that a conventional map does not?
-
-4. Do users care?
-
-After seeing the analysis, do drivers say:
-
-“I would want this before a long journey.”
+> "I would want this before a long journey."
 
 The fourth question is ultimately more important than the first three.
 
-⸻
+---
 
-41. Initial Validation Plan
+## 41. Initial Validation Plan
 
 Before building a complete product, create a prototype capable of analyzing perhaps 20–50 representative journeys.
 
 Include:
 
-* short motorway journeys;
-* long motorway journeys;
-* urban-to-urban journeys;
-* cross-border journeys;
-* heavily congested routes;
-* routes with meaningful alternatives;
-* rural routes;
-* journeys with mixed road types.
+- short motorway journeys;
+- long motorway journeys;
+- urban-to-urban journeys;
+- cross-border journeys;
+- heavily congested routes;
+- routes with meaningful alternatives;
+- rural routes;
+- journeys with mixed road types.
 
 For each journey, evaluate:
 
-* segmentation quality;
-* traffic representation;
-* road classification;
-* speed-value calculations;
-* timeline usefulness.
+- segmentation quality;
+- traffic representation;
+- road classification;
+- speed-value calculations;
+- timeline usefulness.
 
 Then place the results in front of real drivers.
 
 Do not initially ask:
 
-“Would you buy this?”
+> "Would you buy this?"
 
 Instead, give them a journey they understand and observe what information attracts their attention and what changes their interpretation of the trip.
 
-⸻
+---
 
-42. Research Priorities
+## 42. Research Priorities
 
 The next research phase should investigate five areas in parallel.
 
-Technical
+### Technical
 
-* shared-link parsing;
-* routing APIs;
-* traffic APIs;
-* OSM map matching;
-* speed-limit coverage;
-* historical traffic availability.
+- shared-link parsing;
+- routing APIs;
+- traffic APIs;
+- OSM map matching;
+- speed-limit coverage;
+- historical traffic availability.
 
-Mathematical
+### Mathematical
 
 Develop the first model for:
 
-marginal arrival-time benefit of speed.
+> marginal arrival-time benefit of speed.
 
-UX
+### UX
 
 Prototype several representations of the linear journey timeline.
 
-Market
+### Market
 
 Conduct deeper competitive analysis of:
 
-* rail Driver Advisory Systems;
-* truck predictive-driving systems;
-* passenger-car predictive assistance;
-* eco-routing;
-* fleet driver coaching;
-* specialist journey planners.
+- rail Driver Advisory Systems;
+- truck predictive-driving systems;
+- passenger-car predictive assistance;
+- eco-routing;
+- fleet driver coaching;
+- specialist journey planners.
 
-Commercial
+### Commercial
 
 Determine:
 
-* API cost per journey;
-* likely infrastructure cost;
-* licensing constraints;
-* plausible consumer pricing;
-* fleet/OEM alternatives.
+- API cost per journey;
+- likely infrastructure cost;
+- licensing constraints;
+- plausible consumer pricing;
+- fleet/OEM alternatives.
 
-⸻
+---
 
-43. Near-Term Product Roadmap
+## 43. Near-Term Product Roadmap
 
-Phase 0 — Feasibility
+**Phase 0 — Feasibility.** Build scripts capable of analyzing individual journeys. No polished application required.
 
-Build scripts capable of analyzing individual journeys.
+**Phase 1 — Journey Briefing Prototype.** User enters origin/destination. Return:
 
-No polished application required.
+- route;
+- timeline;
+- road breakdown;
+- congestion;
+- useful-speed analysis.
 
-Phase 1 — Journey Briefing Prototype
+**Phase 2 — Shared Route.** Accept shared/pasted Google Maps and Waze journeys.
 
-User enters origin/destination.
+**Phase 3 — Route Comparison.** Compare alternatives by:
 
-Return:
+- ETA;
+- congestion;
+- reliability;
+- journey character;
+- useful-speed profile.
 
-* route;
-* timeline;
-* road breakdown;
-* congestion;
-* useful-speed analysis.
+**Phase 4 — Real-Time Companion.** Explore updating the journey model while the user navigates with an existing navigation product.
 
-Phase 2 — Shared Route
+**Phase 5 — Platform.** Expose Journey Intelligence through an API for:
 
-Accept shared/pasted Google Maps and Waze journeys.
-
-Phase 3 — Route Comparison
-
-Compare alternatives by:
-
-* ETA;
-* congestion;
-* reliability;
-* journey character;
-* useful-speed profile.
-
-Phase 4 — Real-Time Companion
-
-Explore updating the journey model while the user navigates with an existing navigation product.
-
-Phase 5 — Platform
-
-Expose Journey Intelligence through an API for:
-
-* fleets;
-* OEMs;
-* navigation products;
-* mobility platforms.
+- fleets;
+- OEMs;
+- navigation products;
+- mobility platforms.
 
 Progression beyond Phase 2 should depend upon evidence from earlier stages.
 
-⸻
+---
 
-44. Strategic Questions to Preserve
+## 44. Strategic Questions to Preserve
 
 Several questions should deliberately remain open rather than being prematurely decided.
 
-Is this primarily a consumer application or an underlying B2B technology?
-
-Is useful-speed analysis the product, or merely the feature that introduces a broader journey-intelligence product?
-
-Does the strongest value occur before the journey or during it?
-
-Are consumers willing to perform an additional action before navigating?
-
-Is the linear journey timeline itself sufficiently valuable to create a recurring habit?
-
-Does the product primarily improve safety, efficiency, predictability, comfort—or some combination?
-
-Which user segment experiences the problem strongly enough to pay for a solution?
+- Is this primarily a consumer application or an underlying B2B technology?
+- Is useful-speed analysis the product, or merely the feature that introduces a broader journey-intelligence product?
+- Does the strongest value occur before the journey or during it?
+- Are consumers willing to perform an additional action before navigating?
+- Is the linear journey timeline itself sufficiently valuable to create a recurring habit?
+- Does the product primarily improve safety, efficiency, predictability, comfort — or some combination?
+- Which user segment experiences the problem strongly enough to pay for a solution?
 
 These questions should guide experimentation rather than being resolved through assumption.
 
-⸻
+---
 
-45. Current Strategic Position
+## 45. Current Strategic Position
 
 At this stage, the strongest working proposition is:
 
-Journey Intelligence is a pre-trip analysis layer that complements existing navigation applications by explaining how a journey is expected to unfold and which factors will actually determine arrival time.
+> Journey Intelligence is a pre-trip analysis layer that complements existing navigation applications by explaining how a journey is expected to unfold and which factors will actually determine arrival time.
 
 The initial differentiating capability is:
 
-Calculate the marginal arrival-time value of speed across the journey.
+> Calculate the marginal arrival-time value of speed across the journey.
 
 The initial interaction is:
 
-Enter or share a journey → receive a linear journey briefing → continue navigating with the user’s existing navigation application.
+> Enter or share a journey → receive a linear journey briefing → continue navigating with the user's existing navigation application.
 
 The initial technical strategy is:
 
-Use existing routing, traffic and road datasets while developing proprietary journey segmentation and interpretation.
+> Use existing routing, traffic and road datasets while developing proprietary journey segmentation and interpretation.
 
 The initial competitive strategy is:
 
-Do not replace Google Maps or Waze. Build the intelligence layer they currently do not provide.
+> Do not replace Google Maps or Waze. Build the intelligence layer they currently do not provide.
 
-⸻
+---
 
-46. North-Star Product Experience
+## 46. North-Star Product Experience
 
 Ultimately, the product should be able to take a complex journey and reduce it to something a driver understands in seconds:
 
-Paris → Brussels
-
-3h 18m · 312 km
-
-The first hour should flow normally.
-
-The main uncertainty is a 28 km section approaching Brussels, where approximately 20 minutes of congestion is currently expected.
-
-Most of the journey is motorway.
-
-Under current conditions, increasing motorway cruising speed from 110 to 120 km/h is expected to improve arrival by only approximately three minutes.
-
-The alternative route is eight minutes slower but currently more predictable.
+> **Paris → Brussels**
+> 3h 18m · 312 km
+>
+> The first hour should flow normally.
+>
+> The main uncertainty is a 28 km section approaching Brussels, where approximately 20 minutes of congestion is currently expected.
+>
+> Most of the journey is motorway.
+>
+> Under current conditions, increasing motorway cruising speed from 110 to 120 km/h is expected to improve arrival by only approximately three minutes.
+>
+> The alternative route is eight minutes slower but currently more predictable.
 
 That is the experience the project should initially attempt to prove.
 
@@ -1667,9 +1479,9 @@ It is not another set of directions.
 
 It is an explanation of the journey.
 
-⸻
+---
 
-47. Working Definition
+## 47. Working Definition
 
 Journey Intelligence is the process of transforming route, road, traffic and contextual data into an understandable model of how a journey is expected to unfold, what will constrain progress, how predictable the journey is, and which driving decisions materially affect the outcome.
 
