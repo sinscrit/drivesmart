@@ -29,7 +29,9 @@ The central product hypothesis is that drivers can make better, safer and more e
 
 For example:
 
-> Driving at 120 km/h rather than 110 km/h over the next motorway section is expected to improve arrival time by only two minutes because of congestion further ahead.
+> Raising your cruising speed from 110 to 120 km/h over the next motorway section would save approximately two minutes, and increase fatal-crash risk on that section by roughly 40%.
+
+The product therefore evaluates speed as an investment rather than a preference: what is actually bought, and what is paid for it.
 
 The initial product would therefore be a pre-trip journey intelligence tool, not another turn-by-turn navigation application.
 
@@ -178,6 +180,28 @@ The system must never recommend exceeding legal speed limits.
 Instead, it demonstrates where additional speed within the available legal range has little practical value.
 
 The intended outcome is smoother, calmer and more informed driving.
+
+### Value per Unit of Risk
+
+The arrival-time argument above depends on journey structure: it is strong where downstream constraints absorb progress and weak where they do not. A second argument does not depend on journey structure at all, and is therefore more robust.
+
+Time saved over a fixed distance scales as `1/v` — each additional 10 km/h buys progressively fewer minutes. Crash risk scales in the opposite direction: the established power model (Nilsson, sustained by Elvik's later meta-analyses) puts fatal-crash risk at approximately the fourth power of mean speed, serious injury at the third, and slight injury at the second.
+
+Dividing one by the other, **the time bought per unit of additional risk falls with roughly the fifth power of speed.**
+
+Per 100 km of speed-elastic driving:
+
+| Speed step | Time saved | Approximate fatal-risk multiplier |
+| --- | --- | --- |
+| 100 → 110 km/h | 5.5 min | ×1.46 |
+| 110 → 120 km/h | 4.5 min | ×1.42 |
+| 120 → 130 km/h | 3.8 min | ×1.38 |
+
+Across the full range, 100 → 130 km/h buys under 14 minutes per 100 km while nearly tripling fatal-crash risk.
+
+This relationship holds on empty motorway in perfect conditions. It requires no bottleneck, no queue and no congestion, which makes it available on every journey the product analyzes rather than only on favourably-structured ones.
+
+The product objective can therefore be stated as: **maximize value per unit of risk taken.** Where additional speed increases exposure without materially advancing arrival, it is a poor investment — and the product's role is to make that visible with the driver's own journey and numbers rather than as a general exhortation.
 
 ---
 
@@ -416,7 +440,9 @@ For example:
 
 Useful-speed insight:
 
-> Travelling at 120 rather than 110 km/h during the main motorway sections is currently expected to improve arrival time by approximately four minutes.
+> Travelling at 120 rather than 110 km/h during the main motorway sections is currently expected to improve arrival time by approximately four minutes, at roughly 40% higher fatal-crash risk over those sections.
+
+*Note: the four-minute figure is illustrative and unverified. Pending the simulation in `SIM-PRD.md`, no specific arrival-benefit number in this document should be treated as established.*
 
 The objective is not to overwhelm the user with road data.
 
@@ -578,11 +604,27 @@ The system should distinguish several concepts.
 
 **Road Capability** — the speed implied by the road type and geometry under suitable conditions.
 
+**Attainable Speed** — the mean speed the traffic stream actually permits, which is frequently well below both the legal limit and the vehicle's capability.
+
 **Expected Speed** — the speed realistically achievable given traffic and road conditions.
 
 **Useful Speed** — the speed beyond which additional speed provides progressively less meaningful improvement in final arrival time.
 
 The relationship between these values becomes part of the journey model.
+
+### Why Attainable Speed Matters
+
+A road may permit 130 km/h and a vehicle may be capable of 180, but if the traffic stream is moving at 90 with heavy goods vehicles at 85, no driver sustains their intended cruising speed. The realistic pattern is a sawtooth: accelerate into a gap, close on a slower vehicle, wait for an overtaking opportunity, pass, accelerate again.
+
+The consequence is that raising an intended cruising speed may produce very little change in realized mean speed. Peak speed and mean speed diverge sharply, and it is mean speed that determines arrival time.
+
+This effect is well established in traffic engineering as percent time spent following, and it is strongest on single-carriageway roads where overtaking opportunities are limited. It is distinct from congestion: the road is not jammed, it is simply occupied by vehicles travelling more slowly than the driver intends.
+
+It also compounds the risk argument in §6. Chasing a high cruising speed through a mixed stream does not merely fail to save much time — it requires repeated overtaking manoeuvres, which are among the higher-risk actions available to a driver. The product can therefore express a segment insight of the form:
+
+> Your realistic mean speed here is approximately 108 km/h whether you aim for 110 or 140. Pursuing the higher speed is expected to save around two minutes and require roughly fourteen additional overtaking manoeuvres.
+
+Establishing how reliably attainable speed can be estimated from available data is a priority research question (§42).
 
 ---
 
@@ -1008,7 +1050,11 @@ And:
 
 **Speed insight**
 
-> Under current conditions, increasing motorway cruising speed from 110 to 120 km/h would theoretically save considerably more time than is expected to survive through downstream traffic. Estimated destination-arrival benefit: approximately four minutes.
+> This journey contains 340 km of motorway currently flowing at around 110 km/h. Raising your cruising speed to 120 km/h would remove approximately 15 minutes of driving time and increase fatal-crash risk over those sections by roughly 40%.
+
+> How much of those 15 minutes reaches your destination depends on the constraints ahead. The Luxembourg congestion is a sustained slow section rather than a timed or capacity-limited one, so most of the saving is expected to pass through.
+
+*Note: an earlier draft of this document claimed a destination benefit of approximately four minutes here, without specifying any mechanism that would absorb the remaining eleven. That figure was not defensible and has been replaced. The pass-through fraction is the subject of the simulation specified in `SIM-PRD.md`, and the wording above should be revised once that produces a measured value.*
 
 **Step 6.** The user closes Journey Intelligence and navigates normally using their preferred navigation application.
 
@@ -1188,6 +1234,14 @@ Potential insight types include:
 **Speed-Value Insight**
 
 > Increasing cruising speed during the next motorway phase produces little expected destination-time benefit.
+
+**Risk-Value Insight**
+
+> The time gained on this section costs disproportionate risk: 40% higher fatal-crash exposure for four minutes.
+
+**Attainability Insight**
+
+> Traffic flow on this section limits your realistic mean speed to approximately 105 km/h regardless of your intended cruising speed.
 
 **Reliability Insight**
 
@@ -1469,7 +1523,7 @@ Ultimately, the product should be able to take a complex journey and reduce it t
 >
 > Most of the journey is motorway.
 >
-> Under current conditions, increasing motorway cruising speed from 110 to 120 km/h is expected to improve arrival by only approximately three minutes.
+> Under current conditions, increasing motorway cruising speed from 110 to 120 km/h is expected to improve arrival by only approximately three minutes, for roughly 40% more fatal-crash risk over those sections.
 >
 > The alternative route is eight minutes slower but currently more predictable.
 

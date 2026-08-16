@@ -22,6 +22,7 @@ The purpose of this simulation is to determine, before any product is specified:
 1. How large the marginal value of speed actually is on realistic journeys.
 2. Which route and traffic structures make it small (the product's home ground) versus large (where the message fails).
 3. How common those favourable structures are among the journeys the product intends to serve.
+4. How the time gained compares to the risk incurred — the **value per unit of risk** objective set out in §4, which is independent of journey structure and may prove the sturdier of the two arguments.
 
 This is a decision-support exercise, not a prototype. No API dependency, no UI, no route data required for Phase 1.
 
@@ -53,13 +54,43 @@ Claim A needs a mechanism. Four are plausible and each behaves differently. The 
 
 **M4 — Time-varying congestion.** Congestion whose severity depends on when the driver arrives. Critically, this cuts both ways: arriving earlier at a *building* peak means lighter traffic and a **larger** total gain; arriving earlier at a *dissipating* peak means heavier traffic and a smaller one. M4 cannot be assumed to work in the product's favour and may well work against it.
 
+**M5 — Attainability / following constraint.** The road is not congested, but it is occupied by vehicles travelling more slowly than the driver intends. The driver accelerates into gaps, closes on slower vehicles, waits for overtaking opportunities, passes, and repeats. Peak speed and mean speed diverge sharply, and only mean speed determines arrival time.
+
+M5 is distinct from M1–M4 in an important way: it does not absorb a gain that was already banked, it prevents the gain from being realized in the first place. Raising an intended cruising cap from 110 to 140 may move realized mean speed by only a few km/h. In traffic engineering this is measured as percent time spent following, and it is strongest on single-carriageway roads where overtaking is constrained by oncoming traffic.
+
+M5 also couples directly to the risk objective in §4: pursuing a high cruising speed through a mixed stream requires repeated overtaking manoeuvres, which carry elevated risk. So M5 route segments are ones where additional speed buys little time *and* costs disproportionate risk — the strongest possible case for the product's message, and worth identifying specifically.
+
 **Design consequence:** the simulation must report results per-mechanism, not just in aggregate. A headline "average marginal value" that mixes M1 and M3 routes is meaningless.
 
 ---
 
-## 4. Model
+## 4. The Risk Objective
 
-### 4.1 Journey representation
+Arrival time is not the only thing a speed strategy affects. The product's stated objective (`PCS.md` §6) is to maximize **value per unit of risk taken**: where additional speed increases exposure without materially advancing arrival, it is a poor investment.
+
+This objective has a property the time objective lacks — **it does not depend on journey structure.** Time saved over a fixed distance scales as `1/v`. Fatal-crash risk scales approximately as `v⁴` under the established power model (Nilsson; sustained by Elvik's meta-analyses, with exponents varying somewhat by road class). The ratio of marginal time gained to marginal risk incurred therefore falls with roughly the **fifth power of speed**, on every road, in every condition.
+
+The practical consequence for this exercise is significant: **the risk-adjusted result is robust to the simulation's verdict on the time question.** Even if §7 returns a "weak" verdict — meaning speed genuinely does save meaningful time on target journeys — the risk-per-minute trade remains poor and remains a defensible product message. This makes the risk objective the safer foundation of the two, and the simulation should quantify it with equal rigour rather than treating it as secondary.
+
+### 4.1 Risk model
+
+Per segment, relative risk under strategy `V_cap` versus a reference strategy:
+
+```
+risk_ratio = (v_mean_strategy / v_mean_reference) ^ exponent
+```
+
+with exponent 4 for fatal, 3 for serious injury, 2 for slight injury. Risk is weighted by exposure (distance travelled on that segment), and the reference strategy should be stated explicitly in results rather than left implicit.
+
+Overtaking manoeuvres are counted separately as a risk contributor under M5, since they are discrete events rather than a continuous function of speed. A first-cut estimate can be derived from the speed differential between the driver and the stream, and the segment's overtaking opportunity (dual versus single carriageway from OSM).
+
+**Sensitivity requirement:** the power-model exponent is an empirical estimate with real uncertainty. Results must be reported across exponents 3, 4 and 5 for the fatal case, so that conclusions are not artefacts of a single parameter choice.
+
+---
+
+## 5. Model
+
+### 5.1 Journey representation
 
 A journey is an ordered list of segments. Each segment carries:
 
@@ -69,7 +100,10 @@ A journey is an ordered list of segments. Each segment carries:
 | `class` | motorway / primary / secondary / urban |
 | `legal_limit_kmh` | Applicable speed limit |
 | `free_flow_kmh` | Achievable speed absent traffic (≤ legal limit) |
-| `mechanism` | `none` / `M1` / `M2` / `M3` / `M4` |
+| `carriageway` | `dual` / `single` — governs overtaking opportunity |
+| `stream_mean_kmh` | Mean speed of surrounding traffic |
+| `stream_sd_kmh` | Spread of surrounding traffic speeds (drives M5) |
+| `mechanism` | `none` / `M1` / `M2` / `M3` / `M4` / `M5` |
 | `mechanism_params` | Per-mechanism parameters (see below) |
 
 Mechanism parameters:
@@ -78,8 +112,9 @@ Mechanism parameters:
 - **M2:** `discharge_rate_veh_per_hr`, `arrival_rate_veh_per_hr`, `queue_active_window`
 - **M3:** `release_time`, `service_rate` after release
 - **M4:** a severity function over arrival time — minimally, a piecewise-linear profile of `v_effective` versus clock time
+- **M5:** derived from `stream_mean_kmh`, `stream_sd_kmh` and `carriageway`; yields a realized mean speed and an overtaking count for a given `V_cap`
 
-### 4.2 Driver strategy
+### 5.2 Driver strategy
 
 A strategy is a single cruising cap `V_cap`. On each segment:
 
@@ -89,15 +124,15 @@ v_actual = min(V_cap, legal_limit, condition_implied_speed)
 
 `V_cap` is capped at the legal limit throughout — consistent with `PCS.md` §6, the simulation must never model or recommend illegal speeds. Strategies to evaluate: **90, 100, 110, 120 km/h, and "legal maximum throughout."**
 
-### 4.3 What is deliberately excluded from v1
+### 5.3 What is deliberately excluded from v1
 
 Acceleration and deceleration dynamics, gradient, junction delay, overtaking, lane effects, driver rest stops, weather, and stochastic incident modelling. `PCS.md` §27 correctly notes these all matter for accuracy — but none of them change the sign or rough magnitude of the marginal-value effect, which is the only question v1 needs to answer. Adding them before the core question is settled is premature precision.
 
 ---
 
-## 5. Outputs
+## 6. Outputs
 
-### 5.1 Primary metrics
+### 6.1 Primary metrics
 
 **Speed-elastic fraction (SEF).** The share of journey distance on which `V_cap` is the binding constraint. This is the Claim B quantity, and I expect it to explain most of the effect.
 
@@ -105,7 +140,13 @@ Acceleration and deceleration dynamics, gradient, junction delay, overtaking, la
 
 **Pass-through ratio.** Of the raw driving time removed on speed-elastic segments, what fraction actually reaches the destination. **This is the Claim A metric.** A pass-through near 1.0 means gains are preserved and Claim A is false for that route; near 0 means gains are destroyed.
 
-### 5.2 Secondary metrics
+**Attainment ratio.** Realized mean speed divided by intended `V_cap`, per segment. Quantifies how much of an intended cruising speed the traffic stream actually permits. A low attainment ratio at high `V_cap` is the M5 signature.
+
+**Minutes per unit of added risk.** The core risk-objective metric: minutes of arrival benefit divided by the increase in fatal-crash risk, per speed step. Theory predicts this degrades with roughly the fifth power of speed; the simulation should confirm that and quantify it on realistic route structures.
+
+**Overtaking count.** Manoeuvres required per speed strategy, as a discrete risk contributor under M5.
+
+### 6.2 Secondary metrics
 
 - MAB as a share of total journey duration
 - Sensitivity of MAB to congestion severity, holding route shape fixed
@@ -114,9 +155,9 @@ Acceleration and deceleration dynamics, gradient, junction delay, overtaking, la
 
 ---
 
-## 6. Scenario Matrix
+## 7. Scenario Matrix
 
-Eight route archetypes, chosen to span the use cases in `PCS.md` §22:
+Nine route archetypes, chosen to span the use cases in `PCS.md` §22:
 
 | ID | Archetype | Shape |
 | --- | --- | --- |
@@ -128,16 +169,22 @@ Eight route archetypes, chosen to span the use cases in `PCS.md` §22:
 | F | Rush-hour city arrival | 250 km motorway into an M4 evening peak |
 | G | Secondary-road dominated | 220 km, 15% motorway, low speed limits throughout |
 | H | Motorway with sustained roadworks | 380 km with a 40 km M1 section |
+| I | Single-carriageway mixed stream | 200 km, generous limit, stream at 90 with HGVs at 85, limited overtaking (pure M5) |
 
-Each archetype runs against all five speed strategies, and B/D/F additionally sweep congestion severity (light / moderate / severe) and departure time (early / peak / late).
+Each archetype runs against all five speed strategies, and B/D/F additionally sweep congestion severity (light / moderate / severe) and departure time (early / peak / late). Archetype I sweeps stream spread and carriageway type.
 
-Archetype C is the highest priority: it reproduces the doc's own worked example and will show directly whether the ~4-minute figure in §30 is defensible or needs correcting.
+Two archetypes are highest priority:
+
+- **C** reproduces the doc's own worked example and shows directly whether the arrival figures in `PCS.md` §30 hold.
+- **I** isolates the attainability mechanism, which is the only mechanism that suppresses time gain and inflates risk simultaneously. If M5 turns out to be both common and strong, it may be a better product foundation than the congestion story.
 
 ---
 
-## 7. Falsification Criteria
+## 8. Falsification Criteria
 
 **These are fixed before the simulation runs.** Proposed thresholds for your confirmation — move them now if you disagree, not after seeing results.
+
+### 8.1 The time thesis
 
 Judged on the **110→120 km/h** step, across journeys of 3 hours or longer:
 
@@ -154,9 +201,28 @@ Two supporting criteria:
 
 A result in the "weak" band is a genuinely useful outcome, not a failure. It redirects the product early and cheaply, which is the entire point of running this before the PRD.
 
+### 8.2 The risk thesis
+
+Judged on minutes gained per unit of added fatal-crash risk, on the same journeys:
+
+| Result | Verdict |
+| --- | --- |
+| **Trade degrades sharply with speed and holds across exponents 3–5** | **Thesis strong.** Risk-adjusted value becomes the product's primary message, with arrival-time analysis supporting it. |
+| **Trade degrades only under exponent 4–5** | **Thesis conditional.** The message is defensible but the product must be transparent about the uncertainty in the underlying model rather than presenting a single number. |
+| **Trade is roughly flat across speed steps** | **Thesis weak.** This would contradict established literature and should be treated as an implementation error before it is treated as a finding. |
+
+### 8.3 Combined verdict
+
+The two theses are independent, and the product's positioning follows from the pair:
+
+- **Time strong + risk strong** — proceed as `PCS.md` §45 describes, leading with either message.
+- **Time weak + risk strong** — the expected outcome on many routes. Reposition around risk-adjusted value: speed does buy time, but at a price the driver has never seen quantified. `PCS.md` §6 becomes the headline rather than §5.
+- **Time strong + risk weak** — investigate the implementation before accepting it.
+- **Both weak** — the concept's differentiating capability does not exist and the product reduces to a journey briefing. Worth knowing after one week rather than one year.
+
 ---
 
-## 8. Method and Deliverables
+## 9. Method and Deliverables
 
 **Phase 1 — Synthetic (2–3 days).** Implement the model, run the full scenario matrix on hand-specified route definitions. No external data. This alone answers whether the effect exists in principle and which mechanisms produce it.
 
@@ -168,14 +234,29 @@ Phase 2 runs only if Phase 1 lands in the "strong" or "conditional" band. If Pha
 
 1. Simulation code, in-repo and runnable, with route definitions as data rather than hardcoded
 2. Results table: every archetype × strategy × sensitivity combination
-3. A written verdict against §7's criteria, including a recommended correction to `PCS.md` §30 if the arithmetic there does not hold
+3. A written verdict against §8's criteria, covering both the time and risk theses
 4. If the verdict is "conditional," a first cut at the route-detection rule the product would need
 
 ---
 
-## 9. Open Questions
+## 10. Data Availability — Attainable Speed
 
-1. **Are the §7 thresholds right?** 5 and 10 minutes are my judgement of what a driver on a 4-hour trip would call negligible versus meaningful. This is the single most consequential number in the spec.
+M5 is the mechanism most likely to be limited by data rather than by modelling. What the major providers appear to offer, at moderate confidence and requiring verification before Phase 2:
+
+- **Mean speed per segment** — available in some form from Google Routes (as coarse traffic categories along the polyline), and more directly from HERE and TomTom, which expose current speed against free-flow speed per link. The ratio between those two is a usable proxy for how constrained a segment is.
+- **Speed distribution or variance within a segment** — this is what M5 actually needs, and it is much harder to obtain. Providers generally publish a mean, not a spread. Distributional or probe-level data may be available commercially from floating-car-data vendors, at cost.
+- **Historical speed profiles by time of day** — offered as separate paid products (HERE Traffic Patterns, TomTom Traffic Stats) and relevant to M4 as well as M5.
+- **Overtaking opportunity** — not a traffic product at all, but inferable from OSM geometry: single versus dual carriageway, lane count, and sight-line proxies.
+
+The practical implication is that M5 may need to be *inferred* rather than measured: a segment where current speed sits well below free-flow speed without a reported incident is likely flow-constrained, and single-carriageway geometry makes the following effect more severe. Establishing whether that inference is reliable enough for consumer-facing statements is a Phase 2 question.
+
+This section should be replaced with verified findings rather than treated as established.
+
+---
+
+## 11. Open Questions
+
+1. **Are the §8.1 thresholds right?** 5 and 10 minutes are my judgement of what a driver on a 4-hour trip would call negligible versus meaningful. This is the single most consequential number in the spec.
 2. **Is 110→120 the right headline step?** It matches the doc's examples and European motorway limits, but if the target corridor is predominantly 130 km/h, the step should change.
-3. **Should risk and fuel be quantified in v1?** `PCS.md` §3 argues additional speed costs risk, fuel and stress. Quantifying the fuel side would let the product say "4 minutes saved, €7 of fuel spent," which may be a stronger argument than arrival time alone — and would survive even a "weak" verdict on the time question. My inclination is to keep v1 focused, then add fuel in v2 if the time result is weak.
+3. **Should fuel be quantified in v1?** Risk is now in scope (§4). Fuel is the remaining cost in `PCS.md` §3, and would let the product say "4 minutes saved, €7 of fuel burnt" alongside the risk figure. Aerodynamic drag rises with the square of speed, so the fuel argument degrades similarly to the risk one and is likely to reinforce it. My inclination is still to keep v1 to time and risk, then add fuel in v2 — but if the combined "what does this actually cost me" framing is the product, fuel may belong from the start.
 4. **Does M4 need empirical traffic profiles?** Modelling time-varying congestion credibly may require historical traffic data, which Phase 1 deliberately avoids. A crude piecewise profile may be enough to establish direction and rough magnitude.
