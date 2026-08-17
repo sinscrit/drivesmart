@@ -250,7 +250,7 @@ M5 is the mechanism most likely to be limited by data rather than by modelling. 
 
 The practical implication is that M5 may need to be *inferred* rather than measured: a segment where current speed sits well below free-flow speed without a reported incident is likely flow-constrained, and single-carriageway geometry makes the following effect more severe. Establishing whether that inference is reliable enough for consumer-facing statements is a Phase 2 question.
 
-This section should be replaced with verified findings rather than treated as established.
+**Superseded.** The above was written from recollection. Portal contents have since been checked and the findings, together with a full validation plan for M5, are in `M5-VALIDATION.md`. The material change: the Flemish MIV feed publishes both arithmetic and harmonic mean speed per vehicle class, which makes speed variance recoverable via Wardrop's relation without any percentile data or commercial purchase.
 
 ---
 
